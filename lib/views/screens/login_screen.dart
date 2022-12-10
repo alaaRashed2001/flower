@@ -1,3 +1,4 @@
+import 'package:flower/views/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../constant/colors.dart';
@@ -64,7 +65,13 @@ class LogInScreen extends StatelessWidget {
                           ),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const SignUpScreen(),
+                              ),
+                            );
+                          },
                           child: Text(
                             'Register',
                             style: TextStyle(
