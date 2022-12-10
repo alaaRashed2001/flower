@@ -55,7 +55,7 @@ class SignUpScreen extends StatelessWidget {
                       height: 40,
                     ),
                     MyButton(
-                      title: 'Log In',
+                      title: 'SignUp',
                       backgroundColor: green,
                     ),
                     SizedBox(
