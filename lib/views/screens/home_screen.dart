@@ -24,12 +24,11 @@ class HomeScreen extends StatelessWidget {
                           shape: BoxShape.circle),
                       child: const Text(
                         "8",
-                        style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                        style: TextStyle(color: Colors.black,)
                       )),
-
                   IconButton(
-                      onPressed: () { },
-                      icon: Icon(Icons.add_shopping_cart)),
+                      onPressed: () {},
+                      icon: const Icon(Icons.add_shopping_cart)),
                 ],
               ),
               const Padding(
@@ -40,7 +39,70 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
-      drawer: Drawer(),
+      drawer: Drawer(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+
+            Column(
+              children: [
+                const UserAccountsDrawerHeader(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/1.jpg'),
+                        fit: BoxFit.cover),
+                  ),
+                  accountName: Text("Alaa Rashed",
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      )),
+                  accountEmail: Text("alaa.noman.rashed@gmail.com"),
+                  currentAccountPictureSize: Size.square(99),
+                  currentAccountPicture: CircleAvatar(
+                      radius: 55,
+                      backgroundImage: AssetImage('assets/images/2.jpg'),),
+                ),
+
+                ListTile(
+                    title: const Text("Home"),
+                    leading: const Icon(Icons.home),
+                    onTap: () { }
+                ),
+
+                ListTile(
+                    title: const Text("My products"),
+                    leading: const Icon(Icons.add_shopping_cart),
+                    onTap: () { }
+                ),
+
+                ListTile(
+                    title: const Text("About"),
+                    leading: const Icon(Icons.help_center),
+                    onTap: () { }
+                ),
+
+                ListTile(
+                    title: const Text("Logout"),
+                    leading: const Icon(Icons.exit_to_app),
+                    onTap: () { }
+                ),
+
+              ],
+            ),
+
+            Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              child: const Text("Roses symbol to apologize and regret.",
+                  style: TextStyle(
+                      fontSize: 16,
+                    color: green,
+                  ),
+
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
