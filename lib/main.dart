@@ -1,4 +1,4 @@
-import 'package:flower/views/screens/login_screen.dart';
+import 'package:flower/views/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {

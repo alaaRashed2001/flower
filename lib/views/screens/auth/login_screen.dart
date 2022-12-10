@@ -1,9 +1,9 @@
-import 'package:flower/views/screens/signup_screen.dart';
+import 'package:flower/views/screens/auth/signup_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../constant/colors.dart';
-import '../widgets/my_button.dart';
-import '../widgets/my_text_field.dart';
+import '../../../constant/colors.dart';
+import '../../widgets/my_button.dart';
+import '../../widgets/my_text_field.dart';
 
 class LogInScreen extends StatelessWidget {
   const LogInScreen({Key? key}) : super(key: key);

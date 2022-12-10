@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../constant/colors.dart';
-import '../widgets/my_button.dart';
-import '../widgets/my_text_field.dart';
+import '../../../constant/colors.dart';
+import '../../widgets/my_button.dart';
+import '../../widgets/my_text_field.dart';
 import 'login_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
