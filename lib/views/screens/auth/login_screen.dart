@@ -1,4 +1,5 @@
 import 'package:flower/views/screens/auth/signup_screen.dart';
+import 'package:flower/views/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constant/colors.dart';
@@ -49,7 +50,12 @@ class LogInScreen extends StatelessWidget {
                         height: 40,
                       ),
                       MyButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => const HomeScreen(),
+                              ),);
+                        },
                         title: 'Log In',
                         backgroundColor: green,
                       ),
