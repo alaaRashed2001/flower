@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../constant/colors.dart';
+import '../widgets/my_button.dart';
 import '../widgets/my_text_field.dart';
 
 class LogInScreen extends StatelessWidget {
@@ -30,6 +31,11 @@ class LogInScreen extends StatelessWidget {
                 hintText: 'Enter Your Password',
                 isPassword: true,
               ),
+              SizedBox(height: 40,),
+              MyButton(
+                title: 'Log In',
+                backgroundColor: green,
+              ),
             ],
           ),
         ),
@@ -37,3 +43,5 @@ class LogInScreen extends StatelessWidget {
     );
   }
 }
+
+
