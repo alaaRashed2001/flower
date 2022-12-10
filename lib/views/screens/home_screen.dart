@@ -1,3 +1,4 @@
+import 'package:flower/data/dummy_data.dart';
 import 'package:flutter/material.dart';
 
 import '../../constant/colors.dart';
@@ -93,34 +94,40 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 3 / 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 33),
-          itemCount: 4,
-          itemBuilder: (BuildContext context, int index) {
-            return GridTile(
-              footer: GridTileBar(
- //backgroundColor: Color(0xFF497F6E),
-                trailing: IconButton(
-                    color: const Color(0xFF3E5E46),
+      body: Padding(
+        padding: const EdgeInsetsDirectional.only(
+          top: 16,
+          start: 4,
+          end: 4,
+        ),
+        child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 3 / 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 30),
+            itemCount: items.length,
+            itemBuilder: (BuildContext context, int index) {
+              return GridTile(
+                footer: GridTileBar(
+                  trailing: IconButton(
+                    color: green,
                     onPressed: () {},
-                    icon: Icon(Icons.add)),
-
-                leading: Text("\$12.99"),
-
-                title: Text(
-                  "",
+                    icon: const Icon(Icons.add),
+                  ),
+                  leading: const Text("\$12.99"),
+                  title: const Text(
+                    "",
+                  ),
                 ),
-              ),
-              child: GestureDetector(
-                  onTap: () {},
-// use ClipRRect & Positioned
-                  child: Image.asset("assets/images/green-flowers.jpg")),
-            );
-          }),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: InkWell(
+                      onTap: () {}, child: Image.asset(items[index].imagePath)),
+                ),
+              );
+            }),
+      ),
     );
   }
 }
