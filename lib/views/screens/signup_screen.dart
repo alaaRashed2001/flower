@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../constant/colors.dart';
 import '../widgets/my_button.dart';
 import '../widgets/my_text_field.dart';
+import 'login_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -73,7 +74,12 @@ class SignUpScreen extends StatelessWidget {
                             ),
                           ),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => const LogInScreen(),
+                                  ),);
+                            },
                             child: const Text(
                               'SignIn',
                               style: TextStyle(
