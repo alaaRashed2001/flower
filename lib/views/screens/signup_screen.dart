@@ -24,67 +24,69 @@ class SignUpScreen extends StatelessWidget {
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.all(30.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 60,
-                    ),
-                    MyTextField(
-                      textInputType: TextInputType.text,
-                      hintText: 'Enter Your Username',
-                      isPassword: false,
-                    ),
-                    SizedBox(
-                      height: 24,
-                    ),
-                    MyTextField(
-                      textInputType: TextInputType.emailAddress,
-                      hintText: 'Enter Your Email',
-                      isPassword: false,
-                    ),
-                    SizedBox(
-                      height: 24,
-                    ),
-                    MyTextField(
-                      textInputType: TextInputType.text,
-                      hintText: 'Enter Your Password',
-                      isPassword: true,
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    MyButton(
-                      title: 'SignUp',
-                      backgroundColor: green,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Already have an account ? -',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: Text(
-                            'SignIn',
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 60,
+                      ),
+                      const MyTextField(
+                        textInputType: TextInputType.text,
+                        hintText: 'Enter Your Username',
+                        isPassword: false,
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      const MyTextField(
+                        textInputType: TextInputType.emailAddress,
+                        hintText: 'Enter Your Email',
+                        isPassword: false,
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      const MyTextField(
+                        textInputType: TextInputType.text,
+                        hintText: 'Enter Your Password',
+                        isPassword: true,
+                      ),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      const MyButton(
+                        title: 'SignUp',
+                        backgroundColor: green,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Already have an account ? -',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                  ],
+                          InkWell(
+                            onTap: () {},
+                            child: const Text(
+                              'SignIn',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
