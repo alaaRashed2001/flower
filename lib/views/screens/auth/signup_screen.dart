@@ -56,7 +56,8 @@ class SignUpScreen extends StatelessWidget {
                       const SizedBox(
                         height: 40,
                       ),
-                      const MyButton(
+                       MyButton(
+                         onPressed: (){},
                         title: 'SignUp',
                         backgroundColor: green,
                       ),

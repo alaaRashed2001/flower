@@ -29,36 +29,37 @@ class LogInScreen extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 60,
                       ),
-                      MyTextField(
+                      const MyTextField(
                         textInputType: TextInputType.emailAddress,
                         hintText: 'Enter Your Email',
                         isPassword: false,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 24,
                       ),
-                      MyTextField(
+                      const MyTextField(
                         textInputType: TextInputType.text,
                         hintText: 'Enter Your Password',
                         isPassword: true,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
                       MyButton(
+                        onPressed: (){},
                         title: 'Log In',
                         backgroundColor: green,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             'Don\'t have an account ? -',
                             style: TextStyle(
                               color: Colors.black,
