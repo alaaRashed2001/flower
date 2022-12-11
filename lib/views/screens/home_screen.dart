@@ -1,4 +1,5 @@
 import 'package:flower/data/dummy_data.dart';
+import 'package:flower/model/item_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../constant/colors.dart';
@@ -128,7 +129,7 @@ class HomeScreen extends StatelessWidget {
                   child: InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context)=>const DetailsScreen()
+                            builder: (context)=> DetailsScreen(product:items[index] ,)
                         ),);
                       }, child: Image.asset(items[index].imagePath)),
                 ),

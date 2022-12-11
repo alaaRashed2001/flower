@@ -1,12 +1,13 @@
+import 'package:flower/model/item_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../constant/colors.dart';
 
 class DetailsScreen extends StatefulWidget {
-
-   const DetailsScreen({Key? key}) : super(key: key);
-
+  final ItemModel product;
+  const DetailsScreen({super.key, required this.product});
   @override
+
   State<DetailsScreen> createState() => _DetailsScreenState();
 }
 
@@ -24,11 +25,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.asset('assets/images/1.jpg'),
+            Image.asset(widget.product.imagePath),
             const SizedBox(height: 12,),
-            const Text(
-                '\$ 12.99',
-              style: TextStyle(
+             Text(
+                '\$ ${widget.product.price}',
+              style: const TextStyle(
                 fontSize: 20,
               ),
             ),
@@ -83,16 +84,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ),
                   const Spacer(),
                   Row(
-                    children: const [
-                      Icon(
+                    children:  [
+                      const Icon(
                           Icons.edit_location,
                         size: 20,
                         color: Colors.black45,
                       ),
-                      SizedBox(width: 3,),
+                      const SizedBox(width: 3,),
                       Text(
-                          'Flower shop',
-                        style: TextStyle(
+                          widget.product.location,
+                        style: const TextStyle(
                           fontSize: 18,
                         ),
                       ),
@@ -130,7 +131,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 },
                 child:  Text(
                   isShowMore ? 'Show more' : 'Show less',
-                  style: TextStyle(
+                  style: const TextStyle(
                   fontSize: 16,
                 ),),
             ),
