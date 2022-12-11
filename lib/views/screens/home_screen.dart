@@ -2,6 +2,7 @@ import 'package:flower/data/dummy_data.dart';
 import 'package:flutter/material.dart';
 
 import '../../constant/colors.dart';
+import 'details_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -112,7 +113,9 @@ class HomeScreen extends StatelessWidget {
                 footer: GridTileBar(
                   trailing: IconButton(
                     color: green,
-                    onPressed: () {},
+                    onPressed: () {
+
+                    },
                     icon: const Icon(Icons.add),
                   ),
                   leading: const Text("\$12.99"),
@@ -123,7 +126,11 @@ class HomeScreen extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: InkWell(
-                      onTap: () {}, child: Image.asset(items[index].imagePath)),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context)=>const DetailsScreen()
+                        ),);
+                      }, child: Image.asset(items[index].imagePath)),
                 ),
               );
             }),
