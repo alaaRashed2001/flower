@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "271122339115",
+    "project_id": "flower-6f070",
+    "storage_bucket": "flower-6f070.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:271122339115:android:165992ce4fe9f9cf78216e",
+        "android_client_info": {
+          "package_name": "com.flower.flower"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "271122339115-jvvf8bb3j12df3dnh4ahmi2osav2o1lm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6ETKLgDndn4bZB7OV6oyMCnmreiIS-14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "271122339115-jvvf8bb3j12df3dnh4ahmi2osav2o1lm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
