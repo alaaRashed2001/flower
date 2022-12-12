@@ -2,6 +2,7 @@ import 'package:flower/model/item_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../constant/colors.dart';
+import '../widgets/custom_appbar.dart';
 
 class DetailsScreen extends StatefulWidget {
   final ProductModel product;
@@ -21,6 +22,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
         backgroundColor: green,
         title: const Text("Details Screen"),
         centerTitle: true,
+        actions: const [
+          ProductsAndPrice(),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
