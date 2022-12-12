@@ -1,7 +1,7 @@
-class ItemModel{
+class ProductModel{
 late  String imagePath;
- late double price;
+ late num price;
  late String location;
 
-ItemModel({required this.imagePath , required this.price , this.location = 'main branch'});
+ProductModel({required this.imagePath , required this.price , this.location = 'Main branch'});
 }

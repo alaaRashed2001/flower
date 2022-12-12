@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../constant/colors.dart';
 
 class DetailsScreen extends StatefulWidget {
-  final ItemModel product;
+  final ProductModel product;
   const DetailsScreen({super.key, required this.product});
   @override
 

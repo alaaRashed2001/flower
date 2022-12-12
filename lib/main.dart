@@ -1,5 +1,7 @@
+import 'package:flower/provider/cart_provider.dart';
 import 'package:flower/views/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp( MyApp());
@@ -8,9 +10,12 @@ void main() {
 class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-return const MaterialApp(
-  home: LogInScreen(),
-  debugShowCheckedModeBanner: false,
+return  ChangeNotifierProvider(
+create: (context) => CartProvider(),
+  child:   const MaterialApp(
+    home: LogInScreen(),
+    debugShowCheckedModeBanner: false,
+  ),
 );
   }
 

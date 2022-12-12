@@ -1,6 +1,7 @@
 import 'package:flower/data/dummy_data.dart';
-import 'package:flower/model/item_model.dart';
+import 'package:flower/provider/cart_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../constant/colors.dart';
 import 'details_screen.dart';
@@ -11,37 +12,49 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: green,
-        title: const Text("Home"),
-        centerTitle: true,
-        actions: [
-          Row(
-            children: [
-              Stack(
+        appBar: AppBar(
+          actions: [
+            Consumer<CartProvider>(builder: ((context, cart, child) {
+              return Row(
                 children: [
-                  Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: const BoxDecoration(
-                          color: Color.fromARGB(211, 164, 255, 193),
-                          shape: BoxShape.circle),
-                      child: const Text("8",
-                          style: TextStyle(
-                            color: Colors.black,
-                          ))),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.add_shopping_cart)),
+                  Stack(
+                    children: [
+                      Positioned(
+                        bottom: 24,
+                        child: Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: const BoxDecoration(
+                                color: Color(0xFFFFA4D3),
+                                shape: BoxShape.circle),
+                            child: Text(
+                              "${cart.selectedProducts.length}",
+                              style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black),
+                            )),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.add_shopping_cart),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: Text(
+                      "\$ ${cart.price}",
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  ),
                 ],
-              ),
-              const Padding(
-                padding: EdgeInsets.only(right: 12),
-                child: Text("\$ 128"),
-              )
-            ],
-          )
-        ],
-      ),
+              );
+            })),
+          ],
+          backgroundColor: green,
+          title: const Text("Home"),
+          centerTitle: true,
+        ),
+
       drawer: Drawer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,45 +110,67 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsetsDirectional.only(
-          top: 16,
-          start: 4,
-          end: 4,
-        ),
+      padding: const EdgeInsetsDirectional.only(
+        top: 16,
+         start: 4,
+         end: 4,
+       ),
         child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 3 / 2,
                 crossAxisSpacing: 10,
-                mainAxisSpacing: 30),
+                mainAxisSpacing: 33),
             itemCount: items.length,
             itemBuilder: (BuildContext context, int index) {
-              return GridTile(
-                footer: GridTileBar(
-                  trailing: IconButton(
-                    color: green,
-                    onPressed: () {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailsScreen(product: items[index]),
+                    ),
+                  );
+                },
+                child: GridTile(
+                  footer: GridTileBar(
+                    trailing:
+                    Consumer<CartProvider>(builder: ((context, cart, child) {
+                      return IconButton(
+                          color:green,
+                          onPressed: () {
+                            cart.addProduct(items[index]);
+                          },
+                          icon: const Icon(
+                              Icons.add,
+                            size: 30,
+                          ));
+                    })),
 
-                    },
-                    icon: const Icon(Icons.add),
+                    leading: const Text("\$12.99"),
+
+                    title: const Text(
+                      "",
+                    ),
                   ),
-                  leading: const Text("\$12.99"),
-                  title: const Text(
-                    "",
-                  ),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context)=> DetailsScreen(product:items[index] ,)
-                        ),);
-                      }, child: Image.asset(items[index].imagePath)),
+                  child: Stack(children: [
+                    Positioned(
+                      top: -3,
+                      bottom: -9,
+                      right: 0,
+                      left: 0,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: Image.asset(
+                              items[index].imagePath,
+                          )),
+                    ),
+                  ]),
                 ),
               );
             }),
       ),
+
     );
   }
 }
