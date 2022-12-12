@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../constant/colors.dart';
 import '../widgets/custom_appbar.dart';
+import 'checkout_screen.dart';
 import 'details_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -35,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   accountName: Text("Alaa Rashed",
                       style: TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
+                        color: Colors.white,
                       )),
                   accountEmail: Text("alaa.noman.rashed@gmail.com"),
                   currentAccountPictureSize: Size.square(99),
@@ -47,11 +48,23 @@ class HomeScreen extends StatelessWidget {
                 ListTile(
                     title: const Text("Home"),
                     leading: const Icon(Icons.home),
-                    onTap: () {}),
+                    onTap: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          )
+                      );
+                    }),
                 ListTile(
                     title: const Text("My products"),
                     leading: const Icon(Icons.add_shopping_cart),
-                    onTap: () {}),
+                    onTap: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const CheckoutScreen(),
+                          ),
+                      );
+                    }),
                 ListTile(
                     title: const Text("About"),
                     leading: const Icon(Icons.help_center),
