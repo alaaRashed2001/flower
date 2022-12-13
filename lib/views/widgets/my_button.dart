@@ -4,10 +4,11 @@ class MyButton extends StatelessWidget {
   final String title;
   final Color backgroundColor;
   final Function() onPressed;
+  final bool isLoading;
   const MyButton({
     Key? key,
     required this.title,
-    required this.backgroundColor, required this.onPressed,
+    required this.backgroundColor, required this.onPressed,  this.isLoading = false,
   }) : super(key: key);
 
   @override
@@ -25,8 +26,8 @@ class MyButton extends StatelessWidget {
           ),
         ),
       ),
-      child: Text(
-        title,
+      child:  isLoading ? const CircularProgressIndicator(color: Colors.white,) : Text(
+      title,
         style: const TextStyle(
           fontSize: 20,
         ),

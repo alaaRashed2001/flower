@@ -6,8 +6,31 @@ import '../../../constant/colors.dart';
 import '../../widgets/my_button.dart';
 import '../../widgets/my_text_field.dart';
 
-class LogInScreen extends StatelessWidget {
+class LogInScreen extends StatefulWidget {
   const LogInScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LogInScreen> createState() => _LogInScreenState();
+}
+
+class _LogInScreenState extends State<LogInScreen> {
+
+  late TextEditingController emailEditingController;
+  late TextEditingController passwordEditingController;
+
+  @override
+  void initState() {
+    emailEditingController = TextEditingController();
+    passwordEditingController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    emailEditingController.dispose();
+    passwordEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,18 +56,25 @@ class LogInScreen extends StatelessWidget {
                       const SizedBox(
                         height: 60,
                       ),
-                      const MyTextField(
+                       MyTextField(
+                         validator: (v){
+                           return null;
+                         },
+                         controller: emailEditingController,
                         textInputType: TextInputType.emailAddress,
                         hintText: 'Enter Your Email',
-                        isPassword: false,
+
                       ),
                       const SizedBox(
                         height: 24,
                       ),
-                      const MyTextField(
+                       MyTextField(
+                         validator: (v){
+                           return null;
+                         },
+                         controller: passwordEditingController,
                         textInputType: TextInputType.text,
                         hintText: 'Enter Your Password',
-                        isPassword: true,
                       ),
                       const SizedBox(
                         height: 40,
@@ -76,11 +106,11 @@ class LogInScreen extends StatelessWidget {
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => const SignUpScreen(),
+                                  builder: (context) =>  SignUpScreen(),
                                 ),
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               'Register',
                               style: TextStyle(
                                 color: Colors.black,

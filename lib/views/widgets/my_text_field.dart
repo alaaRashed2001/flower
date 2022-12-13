@@ -1,22 +1,28 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
-  final bool isPassword;
+  final TextEditingController controller;
   final String hintText;
   final TextInputType textInputType;
-  const MyTextField({
-    Key? key,
-    required this.isPassword,
-    required this.hintText,
-    required this.textInputType,
-  }) : super(key: key);
+  final Function(String?) validator;
+  final AutovalidateMode autovalidateMode;
+
+  const MyTextField(
+      {Key? key,
+      required this.hintText,
+      required this.textInputType,
+      required this.controller,
+      required String? Function(String?) this.validator,
+      this.autovalidateMode = AutovalidateMode.always})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+        controller: controller,
+        autovalidateMode: autovalidateMode,
+        validator: (v) => validator(v),
         keyboardType: textInputType,
-        obscureText: isPassword,
         decoration: InputDecoration(
           hintText: hintText,
           // To delete borders
