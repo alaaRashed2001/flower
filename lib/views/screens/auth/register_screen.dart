@@ -1,5 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flower/firebase/user_fb_controller.dart';
+import 'package:flower/model/user_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constant/colors.dart';
@@ -8,14 +10,14 @@ import '../../widgets/my_button.dart';
 import '../../widgets/my_text_field.dart';
 import 'login_screen.dart';
 
-class SignUpScreen extends StatefulWidget {
-  SignUpScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> with SnackBarHelper {
+class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
   late TextEditingController usernameEditingController;
   late TextEditingController emailEditingController;
   late TextEditingController passwordEditingController;
@@ -108,41 +110,13 @@ class _SignUpScreenState extends State<SignUpScreen> with SnackBarHelper {
                         onPressed: () async {
                           await performRegister();
                         },
-                        title: 'SignUp',
+                        title: 'Register',
                         backgroundColor: green,
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Already have an account ? -',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                  builder: (context) => const LogInScreen(),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              'SignIn',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+
                     ],
                   ),
                 ),
@@ -157,6 +131,10 @@ class _SignUpScreenState extends State<SignUpScreen> with SnackBarHelper {
   Future<void> performRegister() async {
     if (checkData()) {
       await register();
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context)=>  LoginScreen()
+          )
+      );
     }
   }
 
@@ -171,7 +149,14 @@ class _SignUpScreenState extends State<SignUpScreen> with SnackBarHelper {
         email: emailEditingController.text,
         password: passwordEditingController.text,
       );
+      setState(() {
+        isLoading = false;
+      });
+      await createNewUser();
     } on FirebaseAuthException catch (e) {
+      setState(() {
+        isLoading = false;
+      });
       if (e.code == 'weak-password') {
         showSnackBar(context,
             message: 'The password provided is too weak.', error: true);
@@ -183,15 +168,32 @@ class _SignUpScreenState extends State<SignUpScreen> with SnackBarHelper {
             message: 'Error , Please try again late', error: true);
       }
     } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
       showSnackBar(context, message: e.toString(), error: true);
     }
     setState(() {
       isLoading = false;
     });
-    showSnackBar(context,
-        message: 'create account has been successfully .', error: false);
   }
 
+  Future<void> createNewUser()async{
+    await UserFbController().createUser(getUser());
+    showSnackBar(context,
+        message: 'create account has been successfully',
+        error: false
+    );
+    Navigator.of(context).pop();
+  }
+  UserModel getUser(){
+    UserModel userModel = UserModel();
+    userModel.uId = userCredential.user!.uid;
+    userModel.username = usernameEditingController.text;
+    userModel.email = emailEditingController.text;
+    userModel.password = passwordEditingController.text;
+    return userModel;
+  }
   bool checkData() {
     if (usernameEditingController.text.isEmpty) {
       showSnackBar(context,
