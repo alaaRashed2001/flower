@@ -1,27 +1,30 @@
-import 'package:flower/data/dummy_data.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flower/provider/cart_provider.dart';
+import 'package:flower/shared_preferences/shared_preferences.dart';
+import 'package:flower/views/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../constant/colors.dart';
+import '../../model/product_model.dart';
 import '../widgets/custom_appbar.dart';
 import 'checkout_screen.dart';
 import 'details_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
+  final List items = [ProductModel()];
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-        appBar: AppBar(
-          actions: [
-            ProductsAndPrice(),
-          ],
-          backgroundColor: green,
-          title: const Text("Home"),
-          centerTitle: true,
-        ),
+      appBar: AppBar(
+        actions: const [
+          ProductsAndPrice(),
+        ],
+        backgroundColor: green,
+        title: const Text("Home"),
+        centerTitle: true,
+      ),
       drawer: Drawer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,7 +37,8 @@ class HomeScreen extends StatelessWidget {
                         image: AssetImage('assets/images/1.jpg'),
                         fit: BoxFit.cover),
                   ),
-                  accountName: Text("Alaa Rashed",
+                  accountName: Text(
+                      "Alaa Rashed",
                       style: TextStyle(
                         color: Colors.white,
                       )),
@@ -49,20 +53,18 @@ class HomeScreen extends StatelessWidget {
                     title: const Text("Home"),
                     leading: const Icon(Icons.home),
                     onTap: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
-                          )
-                      );
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => HomeScreen(),
+                      ));
                     }),
                 ListTile(
                     title: const Text("My products"),
                     leading: const Icon(Icons.add_shopping_cart),
                     onTap: () {
                       Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const CheckoutScreen(),
-                          ),
+                        MaterialPageRoute(
+                          builder: (context) => const CheckoutScreen(),
+                        ),
                       );
                     }),
                 ListTile(
@@ -72,7 +74,12 @@ class HomeScreen extends StatelessWidget {
                 ListTile(
                     title: const Text("Logout"),
                     leading: const Icon(Icons.exit_to_app),
-                    onTap: () {}),
+                    onTap: () async {
+                      await FirebaseAuth.instance.signOut();
+                      await SharedPreferencesController().logout();
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const LoginScreen()));
+                    }),
               ],
             ),
             Container(
@@ -89,11 +96,11 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-      padding: const EdgeInsetsDirectional.only(
-        top: 16,
-         start: 4,
-         end: 4,
-       ),
+        padding: const EdgeInsetsDirectional.only(
+          top: 16,
+          start: 4,
+          end: 4,
+        ),
         child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -107,27 +114,26 @@ class HomeScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => DetailsScreen(product: items[index]),
+                      builder: (context) =>
+                          DetailsScreen(product: items[index]),
                     ),
                   );
                 },
                 child: GridTile(
                   footer: GridTileBar(
-                    trailing:
-                    Consumer<CartProvider>(builder: ((context, cart, child) {
+                    trailing: Consumer<CartProvider>(
+                        builder: ((context, cart, child) {
                       return IconButton(
-                          color:green,
+                          color: green,
                           onPressed: () {
                             cart.addProduct(items[index]);
                           },
                           icon: const Icon(
-                              Icons.add,
+                            Icons.add,
                             size: 30,
                           ));
                     })),
-
                     leading: const Text("\$12.99"),
-
                     title: const Text(
                       "",
                     ),
@@ -141,7 +147,7 @@ class HomeScreen extends StatelessWidget {
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(16),
                           child: Image.asset(
-                              items[index].imagePath,
+                            items[index].imagePath,
                           )),
                     ),
                   ]),
@@ -149,7 +155,6 @@ class HomeScreen extends StatelessWidget {
               );
             }),
       ),
-
     );
   }
 }

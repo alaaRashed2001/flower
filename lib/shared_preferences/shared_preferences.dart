@@ -1,0 +1,77 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
+enum SpKeys {
+  loggedIn,
+  language,
+  fcmToken,
+  uId,
+  username,
+  email,
+ password,
+  avatar
+}
+
+class SharedPreferencesController {
+  static final SharedPreferencesController _sharedPrefControllerObj =
+  SharedPreferencesController._sharedPrefPrivateConstructor();
+
+  SharedPreferencesController._sharedPrefPrivateConstructor();
+
+  late SharedPreferences _sharedPrefLibObj;
+  factory SharedPreferencesController() {
+    return _sharedPrefControllerObj;
+  }
+
+  Future<void> initSharedPreferences() async {
+    _sharedPrefLibObj = await SharedPreferences.getInstance();
+  }
+
+
+  // خزن اللغة تاعت التطبيق سواء و هو مطفي او شغال احفظ هي الحالة
+  Future<void> setLanguage({required String language})async{
+    await _sharedPrefLibObj.setString(SpKeys.language.toString(), language);
+  }
+  String get checkLanguage => _sharedPrefLibObj.getString(SpKeys.language.toString()) ?? 'en';
+
+
+  Future<void> setFcmToken({required String fcmToken})async{
+    await _sharedPrefLibObj.setString(SpKeys.fcmToken.toString(), fcmToken);
+  }
+  String get getFcmToken => _sharedPrefLibObj.getString(SpKeys.fcmToken.toString()) ?? ' ' ;
+
+
+  Future<void> setLoggedIn()async{
+    await _sharedPrefLibObj.setBool(SpKeys.loggedIn.toString(), true);
+  }
+  bool get checkLoggedIn => _sharedPrefLibObj.getBool(SpKeys.loggedIn.toString()) ?? false;
+
+
+  Future<void> logout()async{
+    await _sharedPrefLibObj.setString(SpKeys.fcmToken.toString(), '');
+    await _sharedPrefLibObj.setBool(SpKeys.loggedIn.toString(), false);
+  }
+
+
+  /// Auth
+  Future<void> setUId({required String id}) async{
+    await _sharedPrefLibObj.setString(SpKeys.uId.toString(), id);
+  }
+  String get getUId =>
+      _sharedPrefLibObj.getString(SpKeys.uId.toString()) ?? '';
+
+
+
+  Future<void> setEmail({required String email}) async{
+    await _sharedPrefLibObj.setString(SpKeys.email.toString(), email);
+  }
+  String get getEmail =>
+      _sharedPrefLibObj.getString(SpKeys.email.toString()) ?? '';
+
+
+
+  Future<void> setAvatar({required String avatar})async{
+    await _sharedPrefLibObj.setString(SpKeys.avatar.toString(), avatar);
+  }
+  String get getAvatar =>
+      _sharedPrefLibObj.getString(SpKeys.avatar.toString()) ?? '';
+}

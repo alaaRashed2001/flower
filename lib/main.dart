@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flower/provider/admin_mode.dart';
 import 'package:flower/provider/cart_provider.dart';
+import 'package:flower/splash_screen.dart';
 import 'package:flower/views/screens/admin_panels/options.dart';
 import 'package:flower/views/screens/auth/login_screen.dart';
+import 'package:flower/views/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,8 +25,8 @@ return
          ChangeNotifierProvider<AdminMode>(
            create: (context) => AdminMode(),),
        ],
-       child: MaterialApp(
-    home: AdminOptions(),
+       child:  const MaterialApp(
+    home: LoginScreen(),
     debugShowCheckedModeBanner: false,
  
 ),

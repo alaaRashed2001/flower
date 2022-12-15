@@ -1,4 +1,4 @@
-import 'package:flower/model/item_model.dart';
+import 'package:flower/model/product_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../constant/colors.dart';

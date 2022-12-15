@@ -21,10 +21,10 @@ class AdminOptions extends StatelessWidget {
                 title: 'Add Product',
                 backgroundColor: Colors.white,
                 onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const AddProducts()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=> AddProducts()));
                 }
             ),
-SizedBox(height: 30,),
+const SizedBox(height: 30,),
             MyButton(
                 title: 'Edit Product',
                 backgroundColor: Colors.white,
@@ -32,7 +32,7 @@ SizedBox(height: 30,),
                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const EditProducts()));
                 }
             ),
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
             MyButton(
                 title: 'View Orders',
                 backgroundColor: Colors.white,

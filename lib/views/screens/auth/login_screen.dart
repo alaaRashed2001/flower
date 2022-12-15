@@ -1,19 +1,18 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flower/provider/admin_mode.dart';
+import 'package:flower/shared_preferences/shared_preferences.dart';
 import 'package:flower/views/screens/auth/register_screen.dart';
 import 'package:flower/views/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../constant/colors.dart';
 import '../../../helper/snackbar.dart';
 import '../../widgets/my_button.dart';
 import '../../widgets/my_text_field.dart';
-import 'login_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -204,8 +203,9 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
       });
       showSnackBar(context,
           message: 'i have successfully logged in', error: false);
+      SharedPreferencesController().setLoggedIn();
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const HomeScreen()));
+          MaterialPageRoute(builder: (context) =>  HomeScreen()));
     } on FirebaseAuthException catch (e) {
       setState(() {
         isLoading = false;

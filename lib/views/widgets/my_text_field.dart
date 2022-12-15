@@ -4,16 +4,16 @@ class MyTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final TextInputType textInputType;
-  final Function(String?) validator;
+  final Function validator;
   final AutovalidateMode autovalidateMode;
 
   const MyTextField(
       {Key? key,
       required this.hintText,
-      required this.textInputType,
+       this.textInputType = TextInputType.none,
       required this.controller,
-      required String? Function(String?) this.validator,
-      this.autovalidateMode = AutovalidateMode.always})
+
+      this.autovalidateMode = AutovalidateMode.always, required this.validator})
       : super(key: key);
 
   @override
