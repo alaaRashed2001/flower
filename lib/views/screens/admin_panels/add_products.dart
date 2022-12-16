@@ -7,6 +7,7 @@ import 'package:flower/shared_preferences/shared_preferences.dart';
 import 'package:flower/views/widgets/my_button.dart';
 import 'package:flower/views/widgets/my_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../constant/colors.dart';
@@ -70,11 +71,11 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
                 Stack(
                   children: [
                     Container(
-                      width: 180,
-                      height: 180,
+                      width: 180.w,
+                      height: 180.h,
                       decoration: BoxDecoration(
                           color: Colors.grey.shade300,
-                          borderRadius: BorderRadius.circular(8)),
+                          borderRadius: BorderRadius.circular(8.r)),
                       child: Center(
                           child: (imgPath == null)
                               ? const Text("No img selected")
@@ -84,11 +85,11 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
                       bottom: 0,
                       start: 0,
                       child: Container(
-                        width: 30,
-                        height: 30,
+                        width: 30.w,
+                        height: 30.h,
                         decoration: BoxDecoration(
                             color: Colors.green,
-                            borderRadius: BorderRadius.circular(30)),
+                            borderRadius: BorderRadius.circular(30.r)),
                         child: InkWell(
                           onTap: () async {
                             await uploadImage();
@@ -103,28 +104,28 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                 SizedBox(height: 12.h),
                 MyTextField(
                     hintText: 'Title',
                     controller: titleEditingController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
                    ),
-                const SizedBox(height: 16),
+                 SizedBox(height: 16.h),
                 MyTextField(
                     hintText: 'Price',
                     controller: priceEditingController,
+                  textInputType: TextInputType.number,
                    ),
-                const SizedBox(height: 16),
+                 SizedBox(height: 16.h),
                 MyTextField(
                     hintText: 'location',
                     controller: locationEditingController,
                   ),
-                const SizedBox(height: 16),
+                 SizedBox(height: 16.h),
                 MyTextField(
                     hintText: 'description',
                     controller: descriptionEditingController,
                    ),
-                const SizedBox(height: 24),
+                 SizedBox(height: 24.h),
                 MyButton(
                     title: widget.product == null ? 'Add Product' : 'Update Product',
                     backgroundColor: Colors.white,
@@ -150,9 +151,6 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
         setState(() {
           imgPath = File(pickedImg.path);
         });
-        // String imgName = basename(pickedImg.path);
-        // print(imgPath);
-        // print(imgName);
       } else {
         showSnackBar(context, message: "NO img selected", error: true);
       }

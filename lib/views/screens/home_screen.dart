@@ -6,6 +6,7 @@ import 'package:flower/shared_preferences/shared_preferences.dart';
 import 'package:flower/views/screens/admin_panels/add_products.dart';
 import 'package:flower/views/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../constant/colors.dart';
@@ -16,7 +17,7 @@ import 'checkout_screen.dart';
 import 'details_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +86,7 @@ class HomeScreen extends StatelessWidget {
                                       size: 30,
                                     ),
                                   )
-                                : SizedBox();
+                                : const SizedBox();
                           })),
                           leading: const Text("\$12.99"),
                           title: const Text(
@@ -124,23 +125,23 @@ class HomeScreen extends StatelessWidget {
                                                                 product: products[
                                                                     index])));
                                               },
-                                              child: const CircleAvatar(
-                                                radius: 15,
+                                              child:  CircleAvatar(
+                                                radius: 15.r,
                                                 backgroundColor: Colors.green,
-                                                child: Icon(Icons.edit),
+                                                child: const Icon(Icons.edit),
                                               ),
                                             ),
-                                            const SizedBox(width: 10),
+                                             SizedBox(width: 10.w),
                                             InkWell(
                                               onTap: () async {
                                                 await ProductFbController()
                                                     .deleteProduct(
                                                         products[index].id!);
                                               },
-                                              child: const CircleAvatar(
-                                                radius: 15,
+                                              child:  CircleAvatar(
+                                                radius: 15.r,
                                                 backgroundColor: Colors.red,
-                                                child: Icon(Icons.delete),
+                                                child: const Icon(Icons.delete),
                                               ),
                                             ),
                                           ],
@@ -170,15 +171,15 @@ class HomeScreen extends StatelessWidget {
                         image: AssetImage('assets/images/1.jpg'),
                         fit: BoxFit.cover),
                   ),
-                  accountName: const Text("Alaa Rashed",
-                      style: TextStyle(
+                  accountName:  Text(SharedPreferencesController().getUsername,
+                      style: const TextStyle(
                         color: Colors.white,
                       )),
                   accountEmail: Text(SharedPreferencesController().getEmail),
                   currentAccountPictureSize: const Size.square(99),
-                  currentAccountPicture: const CircleAvatar(
-                    radius: 55,
-                    backgroundImage: AssetImage('assets/images/2.jpg'),
+                  currentAccountPicture:  CircleAvatar(
+                    radius: 55.r,
+                    backgroundImage: const AssetImage('assets/images/2.jpg'),
                   ),
                 ),
                 ListTile(

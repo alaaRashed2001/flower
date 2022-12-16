@@ -68,6 +68,24 @@ class SharedPreferencesController {
 
   String get getUserType => _sharedPrefLibObj.getString(SpKeys.userType.toString()) ?? '';
 
+
+  Future<void> setUsername({required String username}) async {
+    await _sharedPrefLibObj.setString(SpKeys.username.toString(), username);
+  }
+
+  String get getUsername =>
+      _sharedPrefLibObj.getString(SpKeys.username.toString()) ?? '';
+
+
+
+
+
+
+
+
+
+
+
   Future<void> setEmail({required String email}) async {
     await _sharedPrefLibObj.setString(SpKeys.email.toString(), email);
   }

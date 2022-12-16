@@ -1,8 +1,8 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flower/firebase/user_fb_controller.dart';
 import 'package:flower/model/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../constant/colors.dart';
 import '../../../helper/snackbar.dart';
@@ -46,12 +46,17 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.black),
+      ),
       body: Stack(
         fit: StackFit.expand,
         children: [
           Positioned.fill(
             child: Opacity(
-              opacity: 0.7,
+              opacity: 0.5,
               child: Image.asset(
                 'assets/images/background.jpg',
                 fit: BoxFit.cover,
@@ -66,36 +71,31 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(height: 60),
+                      SizedBox(height: 60.h),
 
                       /// Username
                       MyTextField(
-
                         controller: usernameEditingController,
                         textInputType: TextInputType.text,
                         hintText: 'Enter Your Username',
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24.h),
 
                       /// Email
                       MyTextField(
-
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: emailEditingController,
                         textInputType: TextInputType.emailAddress,
                         hintText: 'Enter Your Email',
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24.h),
 
                       /// Password
                       MyTextField(
                         controller: passwordEditingController,
-
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         textInputType: TextInputType.text,
                         hintText: 'Enter Your Password',
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20.h),
 
                       /// User Type
                       Row(
@@ -114,7 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
                               const Text('Buyer'),
                             ],
                           ),
-                          const SizedBox(width: 40),
+                          SizedBox(width: 40.w),
                           Row(
                             children: [
                               Radio(
@@ -131,7 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 40),
+                      SizedBox(height: 40.h),
                       MyButton(
                         isLoading: isLoading,
                         onPressed: () async {
@@ -140,8 +140,8 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
                         title: 'Register',
                         backgroundColor: green,
                       ),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        height: 20.h,
                       ),
                     ],
                   ),

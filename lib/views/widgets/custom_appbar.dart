@@ -6,10 +6,6 @@ import '../screens/checkout_screen.dart';
 
 class ProductsAndPrice extends StatelessWidget {
   const ProductsAndPrice({Key? key}) : super(key: key);
-  // Consumer<ClassName>(
-  // builder: ((context, classInstancee, child) {
-  // return Text("${classInstancee.myname}");
-  // })),
   @override
   Widget build(BuildContext context) {
     return  Consumer<CartProvider>(builder: ((context, cart, child) {

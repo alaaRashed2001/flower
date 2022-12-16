@@ -1,5 +1,6 @@
 import 'package:flower/model/product_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../constant/colors.dart';
 import '../widgets/custom_appbar.dart';
@@ -37,7 +38,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 fontSize: 20,
               ),
             ),
-            const SizedBox(height: 16,),
+             SizedBox(height: 16.h,),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -47,7 +48,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       color: const Color(0xFFFF8181),
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: BorderRadius.circular(4.r),
                     ),
                     child: const Text(
                         'New',
@@ -56,7 +57,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8,),
+                   SizedBox(width: 8.w,),
                   Row(
                     children: const [
                        Icon(
@@ -94,7 +95,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         size: 20,
                         color: Colors.black45,
                       ),
-                      const SizedBox(width: 3,),
+                       SizedBox(width: 3.w,),
                       Text(
                           widget.product.location,
                         style: const TextStyle(

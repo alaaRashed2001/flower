@@ -1,16 +1,15 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flower/firebase/user_fb_controller.dart';
-import 'package:flower/provider/admin_mode.dart';
 import 'package:flower/shared_preferences/shared_preferences.dart';
 import 'package:flower/views/screens/auth/register_screen.dart';
 import 'package:flower/views/screens/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../constant/colors.dart';
 import '../../../helper/snackbar.dart';
 import '../../widgets/my_button.dart';
 import '../../widgets/my_text_field.dart';
+import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -47,9 +46,12 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
         fit: StackFit.expand,
         children: [
           Positioned.fill(
-            child: Image.asset(
-              'assets/images/background.jpg',
-              fit: BoxFit.cover,
+            child: Opacity(
+              opacity: 0.5,
+              child: Image.asset(
+                'assets/images/background.jpg',
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           SafeArea(
@@ -60,28 +62,24 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(
-                        height: 60,
+                       SizedBox(
+                        height: 60.h,
                       ),
                       MyTextField(
-
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: emailEditingController,
                         textInputType: TextInputType.emailAddress,
                         hintText: 'Enter Your Email',
                       ),
-                      const SizedBox(
-                        height: 24,
+                       SizedBox(
+                        height: 24.h,
                       ),
                       MyTextField(
                         controller: passwordEditingController,
-
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         textInputType: TextInputType.text,
                         hintText: 'Enter Your Password',
                       ),
-                      const SizedBox(
-                        height: 40,
+                       SizedBox(
+                        height: 40.h,
                       ),
                       MyButton(
                         isLoading: isLoading,
@@ -91,8 +89,29 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
                         title: 'Log In',
                         backgroundColor: green,
                       ),
-                      const SizedBox(
-                        height: 20,
+                       SizedBox(
+                        height: 20.h,
+                      ),
+                      TextButton(
+                          onPressed: (){
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const ForgotPasswordScreen(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Forgot password',
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                      ),
+                      SizedBox(
+                        height: 20.h,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -104,23 +123,25 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
                               fontSize: 20,
                             ),
                           ),
-                          InkWell(
-                            onTap: () {
+                          TextButton(
+                            onPressed: (){
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => const RegisterScreen(),
                                 ),
                               );
                             },
-                            child: const Text(
-                              'Register',
+                            child: Text(
+                              '-Register',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: Colors.green,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
                               ),
                             ),
                           ),
+
                         ],
                       ),
 
@@ -157,6 +178,7 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
       setState(() {
         isLoading = false;
       });
+
       showSnackBar(context,
           message: 'i have successfully logged in', error: false);
       await SharedPreferencesController().setLoggedIn();
@@ -182,7 +204,6 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
     setState(() {
       isLoading = false;
     });
-    // showSnackBar(context, message: 'LogIn has been successfully', error: false);
   }
 
   Future<void> getUserData(String uId) async {

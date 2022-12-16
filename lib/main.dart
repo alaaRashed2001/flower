@@ -4,16 +4,19 @@ import 'package:flower/provider/cart_provider.dart';
 import 'package:flower/shared_preferences/shared_preferences.dart';
 import 'package:flower/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await SharedPreferencesController().initSharedPreferences();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -25,9 +28,15 @@ class MyApp extends StatelessWidget {
           create: (context) => AdminMode(),
         ),
       ],
-      child: const MaterialApp(
-        home: SplashScreen(),
-        debugShowCheckedModeBanner: false,
+      child:  ScreenUtilInit(
+        designSize: const Size(375, 812),
+        builder: (context , child){
+          return const MaterialApp(
+            home: SplashScreen(),
+            debugShowCheckedModeBanner: false,
+          );
+        },
+
       ),
     );
   }

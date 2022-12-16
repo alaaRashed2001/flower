@@ -1,5 +1,6 @@
 import 'package:flower/provider/cart_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../constant/colors.dart';
 import '../widgets/custom_appbar.dart';
@@ -23,7 +24,7 @@ class CheckoutScreen extends StatelessWidget {
         children: [
           SingleChildScrollView(
             child: SizedBox(
-              height: 580,
+              height: 580.h,
               child: ListView.builder(
                 padding: const EdgeInsets.all(8),
                 itemCount: cart.selectedProducts.length,
@@ -42,7 +43,7 @@ class CheckoutScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 30,),
+           SizedBox(height: 30.h,),
           ElevatedButton(
             onPressed: (){
               /// ToDo
@@ -52,7 +53,7 @@ class CheckoutScreen extends StatelessWidget {
               padding: MaterialStateProperty.all(const EdgeInsets.all(12)),
               shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
             ),
-            child:  Text("Pay \$${cart.price}", style: TextStyle(fontSize: 19),),
+            child:  Text("Pay \$${cart.price}", style: const TextStyle(fontSize: 19),),
           ),
         ],
       ),
