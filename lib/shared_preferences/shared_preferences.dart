@@ -7,17 +7,19 @@ enum SpKeys {
   uId,
   username,
   email,
- password,
-  avatar
+  password,
+  avatar,
+  userType,
 }
 
 class SharedPreferencesController {
   static final SharedPreferencesController _sharedPrefControllerObj =
-  SharedPreferencesController._sharedPrefPrivateConstructor();
+      SharedPreferencesController._sharedPrefPrivateConstructor();
 
   SharedPreferencesController._sharedPrefPrivateConstructor();
 
   late SharedPreferences _sharedPrefLibObj;
+
   factory SharedPreferencesController() {
     return _sharedPrefControllerObj;
   }
@@ -26,52 +28,57 @@ class SharedPreferencesController {
     _sharedPrefLibObj = await SharedPreferences.getInstance();
   }
 
-
   // خزن اللغة تاعت التطبيق سواء و هو مطفي او شغال احفظ هي الحالة
-  Future<void> setLanguage({required String language})async{
+  Future<void> setLanguage({required String language}) async {
     await _sharedPrefLibObj.setString(SpKeys.language.toString(), language);
   }
-  String get checkLanguage => _sharedPrefLibObj.getString(SpKeys.language.toString()) ?? 'en';
 
+  String get checkLanguage =>
+      _sharedPrefLibObj.getString(SpKeys.language.toString()) ?? 'en';
 
-  Future<void> setFcmToken({required String fcmToken})async{
+  Future<void> setFcmToken({required String fcmToken}) async {
     await _sharedPrefLibObj.setString(SpKeys.fcmToken.toString(), fcmToken);
   }
-  String get getFcmToken => _sharedPrefLibObj.getString(SpKeys.fcmToken.toString()) ?? ' ' ;
 
+  String get getFcmToken =>
+      _sharedPrefLibObj.getString(SpKeys.fcmToken.toString()) ?? ' ';
 
-  Future<void> setLoggedIn()async{
+  Future<void> setLoggedIn() async {
     await _sharedPrefLibObj.setBool(SpKeys.loggedIn.toString(), true);
   }
-  bool get checkLoggedIn => _sharedPrefLibObj.getBool(SpKeys.loggedIn.toString()) ?? false;
 
+  bool get checkLoggedIn =>
+      _sharedPrefLibObj.getBool(SpKeys.loggedIn.toString()) ?? false;
 
-  Future<void> logout()async{
+  Future<void> logout() async {
     await _sharedPrefLibObj.setString(SpKeys.fcmToken.toString(), '');
     await _sharedPrefLibObj.setBool(SpKeys.loggedIn.toString(), false);
   }
 
-
   /// Auth
-  Future<void> setUId({required String id}) async{
+  Future<void> setUId({required String id}) async {
     await _sharedPrefLibObj.setString(SpKeys.uId.toString(), id);
   }
-  String get getUId =>
-      _sharedPrefLibObj.getString(SpKeys.uId.toString()) ?? '';
 
+  String get getUId => _sharedPrefLibObj.getString(SpKeys.uId.toString()) ?? '';
 
+  Future<void> setUserType({required String type}) async {
+    await _sharedPrefLibObj.setString(SpKeys.userType.toString(), type);
+  }
 
-  Future<void> setEmail({required String email}) async{
+  String get getUserType => _sharedPrefLibObj.getString(SpKeys.userType.toString()) ?? '';
+
+  Future<void> setEmail({required String email}) async {
     await _sharedPrefLibObj.setString(SpKeys.email.toString(), email);
   }
+
   String get getEmail =>
       _sharedPrefLibObj.getString(SpKeys.email.toString()) ?? '';
 
-
-
-  Future<void> setAvatar({required String avatar})async{
+  Future<void> setAvatar({required String avatar}) async {
     await _sharedPrefLibObj.setString(SpKeys.avatar.toString(), avatar);
   }
+
   String get getAvatar =>
       _sharedPrefLibObj.getString(SpKeys.avatar.toString()) ?? '';
 }

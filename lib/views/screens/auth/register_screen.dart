@@ -39,6 +39,9 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
   }
 
   bool isLoading = false;
+
+  UserTypes userType = UserTypes.buyer;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,9 +50,12 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
         fit: StackFit.expand,
         children: [
           Positioned.fill(
-            child: Image.asset(
-              'assets/images/background.jpg',
-              fit: BoxFit.cover,
+            child: Opacity(
+              opacity: 0.7,
+              child: Image.asset(
+                'assets/images/background.jpg',
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           SafeArea(
@@ -60,51 +66,72 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(
-                        height: 60,
-                      ),
+                      const SizedBox(height: 60),
+
+                      /// Username
                       MyTextField(
-                        validator: (v) {
-                          return null;
-                        },
+
                         controller: usernameEditingController,
                         textInputType: TextInputType.text,
                         hintText: 'Enter Your Username',
+                      ),
+                      const SizedBox(height: 24),
 
-                      ),
-                      const SizedBox(
-                        height: 24,
-                      ),
+                      /// Email
                       MyTextField(
-                        validator: (value) {
-                          return value != null &&
-                                  !EmailValidator.validate(value)
-                              ? "Enter a valid email"
-                              : null;
-                        },
+
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: emailEditingController,
                         textInputType: TextInputType.emailAddress,
                         hintText: 'Enter Your Email',
+                      ),
+                      const SizedBox(height: 24),
 
-                      ),
-                      const SizedBox(
-                        height: 24,
-                      ),
+                      /// Password
                       MyTextField(
                         controller: passwordEditingController,
-                        validator: (value) {
-                          return value!.length < 6
-                              ? "Enter at least 6 characters"
-                              : null;
-                        },
+
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         textInputType: TextInputType.text,
                         hintText: 'Enter Your Password',
                       ),
-                      const SizedBox(
-                        height: 40,
+                      const SizedBox(height: 20),
+
+                      /// User Type
+                      Row(
+                        children: [
+                          Row(
+                            children: [
+                              Radio(
+                                value: UserTypes.buyer,
+                                groupValue: userType,
+                                onChanged: (value) {
+                                  setState(() {
+                                    userType = value!;
+                                  });
+                                },
+                              ),
+                              const Text('Buyer'),
+                            ],
+                          ),
+                          const SizedBox(width: 40),
+                          Row(
+                            children: [
+                              Radio(
+                                value: UserTypes.seller,
+                                groupValue: userType,
+                                onChanged: (value) {
+                                  setState(() {
+                                    userType = value!;
+                                  });
+                                },
+                              ),
+                              const Text('Seller'),
+                            ],
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 40),
                       MyButton(
                         isLoading: isLoading,
                         onPressed: () async {
@@ -116,7 +143,6 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
                       const SizedBox(
                         height: 20,
                       ),
-
                     ],
                   ),
                 ),
@@ -132,13 +158,12 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
     if (checkData()) {
       await register();
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context)=>  LoginScreen()
-          )
-      );
+          MaterialPageRoute(builder: (context) => const LoginScreen()));
     }
   }
 
   late final UserCredential userCredential;
+
   Future<void> register() async {
     setState(() {
       isLoading = true;
@@ -178,22 +203,23 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
     });
   }
 
-  Future<void> createNewUser()async{
-    await UserFbController().createUser(getUser());
+  Future<void> createNewUser() async {
+    await UserFbController().createUser(getUser);
     showSnackBar(context,
-        message: 'create account has been successfully',
-        error: false
-    );
+        message: 'create account has been successfully', error: false);
     Navigator.of(context).pop();
   }
-  UserModel getUser(){
+
+  UserModel get getUser {
     UserModel userModel = UserModel();
     userModel.uId = userCredential.user!.uid;
     userModel.username = usernameEditingController.text;
     userModel.email = emailEditingController.text;
     userModel.password = passwordEditingController.text;
+    userModel.type = userType.name;
     return userModel;
   }
+
   bool checkData() {
     if (usernameEditingController.text.isEmpty) {
       showSnackBar(context,

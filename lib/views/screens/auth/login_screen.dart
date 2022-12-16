@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flower/firebase/user_fb_controller.dart';
 import 'package:flower/provider/admin_mode.dart';
 import 'package:flower/shared_preferences/shared_preferences.dart';
 import 'package:flower/views/screens/auth/register_screen.dart';
@@ -63,12 +64,7 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
                         height: 60,
                       ),
                       MyTextField(
-                        validator: (value) {
-                          return value != null &&
-                                  !EmailValidator.validate(value)
-                              ? "Enter a valid email"
-                              : null;
-                        },
+
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: emailEditingController,
                         textInputType: TextInputType.emailAddress,
@@ -79,11 +75,7 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
                       ),
                       MyTextField(
                         controller: passwordEditingController,
-                        validator: (value) {
-                          return value!.length < 6
-                              ? "Enter at least 6 characters"
-                              : null;
-                        },
+
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         textInputType: TextInputType.text,
                         hintText: 'Enter Your Password',
@@ -114,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.of(context).pushReplacement(
+                              Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => const RegisterScreen(),
                                 ),
@@ -131,46 +123,7 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 10,
-                        ),
-                        child: Row(
-                          children:  [
-                            Expanded(
-                                child: InkWell(
-                                  onTap: (){
-                                    Provider.of<AdminMode>(context , listen: false).changeisAdmin(true);
-                                  },
-                                  child: Text(
-                                    'i\'m as admin',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Provider.of<AdminMode>(context).isAdmin ? Colors.transparent : Colors.black
-                                    ),
-                                  ),
-                                )),
-                            Expanded(
-                                child: InkWell(
-                                  onTap: (){
-                                    Provider.of<AdminMode>(context , listen: false).changeisAdmin(false);
-                                  },
-                                  child: Text(
-                                    'i\'m as user',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color:  Provider.of<AdminMode>(context).isAdmin ? Colors.black : Colors.transparent
-                                    ),
-                                  ),
-                                )),
-                          ],
-                        ),
-                      ),
+
                     ],
                   ),
                 ),
@@ -198,12 +151,15 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
         email: emailEditingController.text,
         password: passwordEditingController.text,
       );
+      /// Get User Data
+      await getUserData(userCredential.user!.uid);
+
       setState(() {
         isLoading = false;
       });
       showSnackBar(context,
           message: 'i have successfully logged in', error: false);
-      SharedPreferencesController().setLoggedIn();
+      await SharedPreferencesController().setLoggedIn();
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) =>  HomeScreen()));
     } on FirebaseAuthException catch (e) {
@@ -226,8 +182,22 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
     setState(() {
       isLoading = false;
     });
-    showSnackBar(context, message: 'LogIn has been successfully', error: false);
+    // showSnackBar(context, message: 'LogIn has been successfully', error: false);
   }
+
+  Future<void> getUserData(String uId) async {
+    /// Get user model from Firestore
+    var data = await UserFbController().readUser(uId);
+
+    if(data != null) {
+      /// Save user data in Shared Preferences
+      await SharedPreferencesController().setEmail(email: data.email);
+      await SharedPreferencesController().setUserType(type: data.type);
+      await SharedPreferencesController().setUId(id: uId);
+
+    }
+  }
+
 
   bool checkData() {
     if (emailEditingController.text.isEmpty) {

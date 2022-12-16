@@ -3,6 +3,7 @@ import 'package:flower/firebase/product_fb_controller.dart';
 import 'package:flower/model/product_model.dart';
 
 import 'package:flower/helper/snackbar.dart';
+import 'package:flower/shared_preferences/shared_preferences.dart';
 import 'package:flower/views/widgets/my_button.dart';
 import 'package:flower/views/widgets/my_text_field.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,12 @@ import 'package:image_picker/image_picker.dart';
 import '../../../constant/colors.dart';
 
 class AddProducts extends StatefulWidget {
-  const AddProducts({Key? key}) : super(key: key);
+  final ProductModel? product;
+
+  const AddProducts({
+    required this.product,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<AddProducts> createState() => _AddProductsState();
@@ -26,13 +32,14 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
   late TextEditingController locationEditingController;
 
   late TextEditingController descriptionEditingController;
+
   @override
   void initState() {
-    priceEditingController = TextEditingController();
-    titleEditingController = TextEditingController();
+    priceEditingController = TextEditingController(text: widget.product != null ? widget.product!.price.toString() : '');
+    titleEditingController = TextEditingController(text: widget.product != null ? widget.product!.title : '');
     stateEditingController = TextEditingController();
-    locationEditingController = TextEditingController();
-    descriptionEditingController = TextEditingController();
+    locationEditingController = TextEditingController(text: widget.product != null ? widget.product!.location : '');
+    descriptionEditingController = TextEditingController(text: widget.product != null ? widget.product!.description : '');
     super.initState();
   }
 
@@ -49,7 +56,11 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: green,
+      appBar: AppBar(
+        backgroundColor: green,
+        title: Text(widget.product == null ? "Add Product" : "Update Product"),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -61,11 +72,9 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
                     Container(
                       width: 180,
                       height: 180,
-
                       decoration: BoxDecoration(
                           color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(8)
-                      ),
+                          borderRadius: BorderRadius.circular(8)),
                       child: Center(
                           child: (imgPath == null)
                               ? const Text("No img selected")
@@ -74,15 +83,14 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
                     PositionedDirectional(
                       bottom: 0,
                       start: 0,
-                      child:  Container(
+                      child: Container(
                         width: 30,
                         height: 30,
                         decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(30)
-                        ),
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(30)),
                         child: InkWell(
-                          onTap: ()async{
+                          onTap: () async {
                             await uploadImage();
                           },
                           child: const Icon(
@@ -93,46 +101,36 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
                         ),
                       ),
                     ),
-
                   ],
                 ),
-                const SizedBox(
-                  height: 12,
-                ),
+                const SizedBox(height: 12),
                 MyTextField(
                     hintText: 'Title',
                     controller: titleEditingController,
-                    validator: (v) {}),
-                const SizedBox(
-                  height: 16,
-                ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                   ),
+                const SizedBox(height: 16),
                 MyTextField(
                     hintText: 'Price',
                     controller: priceEditingController,
-                    validator: (v) {}),
-                const SizedBox(
-                  height: 16,
-                ),
+                   ),
+                const SizedBox(height: 16),
                 MyTextField(
                     hintText: 'location',
                     controller: locationEditingController,
-                    validator: (v) {}),
-                const SizedBox(
-                  height: 16,
-                ),
+                  ),
+                const SizedBox(height: 16),
                 MyTextField(
                     hintText: 'description',
                     controller: descriptionEditingController,
-                    validator: (v) {}),
-                const SizedBox(
-                  height: 24,
-                ),
+                   ),
+                const SizedBox(height: 24),
                 MyButton(
-                    title: 'Add Product',
+                    title: widget.product == null ? 'Add Product' : 'Update Product',
                     backgroundColor: Colors.white,
-                    onPressed: () async{
-                      await createNewProduct();
-
+                    isLoading: loading,
+                    onPressed: () async {
+                      await addProduct();
                     }),
               ],
             ),
@@ -142,7 +140,9 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
     );
   }
 
+  bool loading = false;
   File? imgPath;
+
   uploadImage() async {
     final pickedImg = await ImagePicker().pickImage(source: ImageSource.camera);
     try {
@@ -161,18 +161,35 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
     }
   }
 
-  Future<void> createNewProduct()async{
-    await ProductFbController().createProduct(getProduct());
+  Future<void> addProduct() async {
+    setState(() {
+      loading = true;
+    });
+    try {
+      if(widget.product == null) {
+        await ProductFbController().createProduct(getProduct);
+      } else {
+        await ProductFbController().updateProduct(getProduct);
+      }
+      showSnackBar(context, message: widget.product == null ? "Product Added" : "Product Updated", error: false,);
+      Navigator.pop(context);
+    } catch(e){
+      showSnackBar(context, message: widget.product == null ? "Failed Adding" : "Failed Updating", error: true,);
+    }
+    setState(() {
+      loading = false;
+    });
   }
 
-  ProductModel getProduct(){
+  ProductModel get getProduct {
     ProductModel productModel = ProductModel();
-    // id
-    // imagePath
-   productModel.title = titleEditingController.text;
-   productModel.price = priceEditingController.text as num;
-   productModel.location = locationEditingController.text;
-   productModel.description = descriptionEditingController.text;
+    productModel.id = widget.product == null ? DateTime.now().toString() : widget.product!.id;
+    productModel.title = titleEditingController.text;
+    productModel.price = num.parse(priceEditingController.text);
+    productModel.location = locationEditingController.text;
+    productModel.description = descriptionEditingController.text;
+    productModel.sellerId = SharedPreferencesController().getUId;
+    productModel.imagePath = 'assets/images/8.jpg';
     return productModel;
   }
 }
