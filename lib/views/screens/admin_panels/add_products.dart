@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flower/firebase/product_fb_controller.dart';
 import 'package:flower/model/product_model.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flower/helper/snackbar.dart';
 import 'package:flower/shared_preferences/shared_preferences.dart';
 import 'package:flower/views/widgets/my_button.dart';
@@ -36,11 +36,15 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
 
   @override
   void initState() {
-    priceEditingController = TextEditingController(text: widget.product != null ? widget.product!.price.toString() : '');
-    titleEditingController = TextEditingController(text: widget.product != null ? widget.product!.title : '');
+    priceEditingController = TextEditingController(
+        text: widget.product != null ? widget.product!.price.toString() : '');
+    titleEditingController = TextEditingController(
+        text: widget.product != null ? widget.product!.title : '');
     stateEditingController = TextEditingController();
-    locationEditingController = TextEditingController(text: widget.product != null ? widget.product!.location : '');
-    descriptionEditingController = TextEditingController(text: widget.product != null ? widget.product!.description : '');
+    locationEditingController = TextEditingController(
+        text: widget.product != null ? widget.product!.location : '');
+    descriptionEditingController = TextEditingController(
+        text: widget.product != null ? widget.product!.description : '');
     super.initState();
   }
 
@@ -91,8 +95,8 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(30.r)),
                         child: InkWell(
-                          onTap: () async {
-                            await uploadImage();
+                          onTap: () {
+                            choose2UploadImage();
                           },
                           child: const Icon(
                             Icons.camera_alt,
@@ -104,30 +108,32 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
                     ),
                   ],
                 ),
-                 SizedBox(height: 12.h),
+                SizedBox(height: 12.h),
                 MyTextField(
-                    hintText: 'Title',
-                    controller: titleEditingController,
-                   ),
-                 SizedBox(height: 16.h),
+                  hintText: 'Title',
+                  controller: titleEditingController,
+                ),
+                SizedBox(height: 16.h),
                 MyTextField(
-                    hintText: 'Price',
-                    controller: priceEditingController,
+                  hintText: 'Price',
+                  controller: priceEditingController,
                   textInputType: TextInputType.number,
-                   ),
-                 SizedBox(height: 16.h),
+                ),
+                SizedBox(height: 16.h),
                 MyTextField(
-                    hintText: 'location',
-                    controller: locationEditingController,
-                  ),
-                 SizedBox(height: 16.h),
+                  hintText: 'location',
+                  controller: locationEditingController,
+                ),
+                SizedBox(height: 16.h),
                 MyTextField(
-                    hintText: 'description',
-                    controller: descriptionEditingController,
-                   ),
-                 SizedBox(height: 24.h),
+                  hintText: 'description',
+                  controller: descriptionEditingController,
+                ),
+                SizedBox(height: 24.h),
                 MyButton(
-                    title: widget.product == null ? 'Add Product' : 'Update Product',
+                    title: widget.product == null
+                        ? 'Add Product'
+                        : 'Update Product',
                     backgroundColor: Colors.white,
                     isLoading: loading,
                     onPressed: () async {
@@ -142,10 +148,79 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
   }
 
   bool loading = false;
+  ///////////////////////////////////////////////////////////////
   File? imgPath;
+  String? imgName;
 
-  uploadImage() async {
-    final pickedImg = await ImagePicker().pickImage(source: ImageSource.camera);
+  choose2UploadImage() {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            padding: const EdgeInsets.all(22),
+            height: 200.h,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () async {
+                    await uploadImage(ImageSource.camera);
+                  },
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.camera_alt_outlined,
+                        size: 30,
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        'From Camera',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 22.h,
+                ),
+                InkWell(
+                  onTap: () async {
+                    await uploadImage(ImageSource.gallery);
+                  },
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.photo,
+                        size: 30,
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        'From Gallery',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(fontSize: 18),
+                    ))
+              ],
+            ),
+          );
+        });
+  }
+
+  uploadImage(ImageSource source) async {
+    final pickedImg = await ImagePicker().pickImage(source: source);
     try {
       if (pickedImg != null) {
         setState(() {
@@ -159,20 +234,29 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
     }
   }
 
+/////////////////////////////////////////////////////////////////
   Future<void> addProduct() async {
     setState(() {
       loading = true;
     });
     try {
-      if(widget.product == null) {
+      if (widget.product == null) {
         await ProductFbController().createProduct(getProduct);
       } else {
         await ProductFbController().updateProduct(getProduct);
       }
-      showSnackBar(context, message: widget.product == null ? "Product Added" : "Product Updated", error: false,);
+      showSnackBar(
+        context,
+        message: widget.product == null ? "Product Added" : "Product Updated",
+        error: false,
+      );
       Navigator.pop(context);
-    } catch(e){
-      showSnackBar(context, message: widget.product == null ? "Failed Adding" : "Failed Updating", error: true,);
+    } catch (e) {
+      showSnackBar(
+        context,
+        message: widget.product == null ? "Failed Adding" : "Failed Updating",
+        error: true,
+      );
     }
     setState(() {
       loading = false;
@@ -181,7 +265,8 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
 
   ProductModel get getProduct {
     ProductModel productModel = ProductModel();
-    productModel.id = widget.product == null ? DateTime.now().toString() : widget.product!.id;
+    productModel.id =
+        widget.product == null ? DateTime.now().toString() : widget.product!.id;
     productModel.title = titleEditingController.text;
     productModel.price = num.parse(priceEditingController.text);
     productModel.location = locationEditingController.text;

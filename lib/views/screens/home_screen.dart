@@ -5,6 +5,7 @@ import 'package:flower/provider/cart_provider.dart';
 import 'package:flower/shared_preferences/shared_preferences.dart';
 import 'package:flower/views/screens/admin_panels/add_products.dart';
 import 'package:flower/views/screens/auth/login_screen.dart';
+import 'package:flower/views/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -125,20 +126,20 @@ class HomeScreen extends StatelessWidget {
                                                                 product: products[
                                                                     index])));
                                               },
-                                              child:  CircleAvatar(
+                                              child: CircleAvatar(
                                                 radius: 15.r,
                                                 backgroundColor: Colors.green,
                                                 child: const Icon(Icons.edit),
                                               ),
                                             ),
-                                             SizedBox(width: 10.w),
+                                            SizedBox(width: 10.w),
                                             InkWell(
                                               onTap: () async {
                                                 await ProductFbController()
                                                     .deleteProduct(
                                                         products[index].id!);
                                               },
-                                              child:  CircleAvatar(
+                                              child: CircleAvatar(
                                                 radius: 15.r,
                                                 backgroundColor: Colors.red,
                                                 child: const Icon(Icons.delete),
@@ -171,13 +172,13 @@ class HomeScreen extends StatelessWidget {
                         image: AssetImage('assets/images/1.jpg'),
                         fit: BoxFit.cover),
                   ),
-                  accountName:  Text(SharedPreferencesController().getUsername,
+                  accountName: Text(SharedPreferencesController().getUsername,
                       style: const TextStyle(
                         color: Colors.white,
                       )),
                   accountEmail: Text(SharedPreferencesController().getEmail),
                   currentAccountPictureSize: const Size.square(99),
-                  currentAccountPicture:  CircleAvatar(
+                  currentAccountPicture: CircleAvatar(
                     radius: 55.r,
                     backgroundImage: const AssetImage('assets/images/2.jpg'),
                   ),
@@ -216,9 +217,15 @@ class HomeScreen extends StatelessWidget {
                         })
                     : const SizedBox.shrink(),
                 ListTile(
-                    title: const Text("About"),
-                    leading: const Icon(Icons.help_center),
-                    onTap: () {}),
+                    title: const Text("Profile page"),
+                    leading: const Icon(Icons.person),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const ProfileScreen(),
+                        ),
+                      );
+                    }),
                 ListTile(
                     title: const Text("Logout"),
                     leading: const Icon(Icons.exit_to_app),
