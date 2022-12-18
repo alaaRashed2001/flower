@@ -134,6 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
 
                       /// Password
                       MyTextField(
+                        obscure: true,
                         controller: passwordEditingController,
                         textInputType: TextInputType.text,
                         hintText: 'Enter Your Password',

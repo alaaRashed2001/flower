@@ -74,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
                         height: 24.h,
                       ),
                       MyTextField(
+                        obscure: true,
                         controller: passwordEditingController,
                         textInputType: TextInputType.text,
                         hintText: 'Enter Your Password',
