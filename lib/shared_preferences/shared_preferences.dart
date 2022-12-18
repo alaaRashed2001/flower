@@ -2,7 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 enum SpKeys {
   loggedIn,
-  language,
+ lang,
   fcmToken,
   uId,
   username,
@@ -29,12 +29,13 @@ class SharedPreferencesController {
   }
 
   // خزن اللغة تاعت التطبيق سواء و هو مطفي او شغال احفظ هي الحالة
-  Future<void> setLanguage({required String language}) async {
-    await _sharedPrefLibObj.setString(SpKeys.language.toString(), language);
+  /// Language
+  Future<void> setLanguage(String language) async {
+    await _sharedPrefLibObj.setString(SpKeys.lang.name, language);
   }
 
-  String get checkLanguage =>
-      _sharedPrefLibObj.getString(SpKeys.language.toString()) ?? 'en';
+  String get getLanguage =>
+      _sharedPrefLibObj.getString(SpKeys.lang.name) ?? 'en';
 
   Future<void> setFcmToken({required String fcmToken}) async {
     await _sharedPrefLibObj.setString(SpKeys.fcmToken.toString(), fcmToken);

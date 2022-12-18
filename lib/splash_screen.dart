@@ -2,6 +2,7 @@ import 'package:flower/shared_preferences/shared_preferences.dart';
 import 'package:flower/views/screens/auth/login_screen.dart';
 import 'package:flower/views/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -30,13 +31,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            'assets/images/flowers.png',
+            'assets/images/11.jpg',
             fit: BoxFit.cover,
+            height: 600.h,
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),

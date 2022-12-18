@@ -9,16 +9,17 @@ import 'package:flower/views/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../constant/colors.dart';
 import '../../model/product_model.dart';
 import '../../model/user_model.dart';
+import '../../provider/lang_provider.dart';
 import '../widgets/custom_appbar.dart';
 import 'checkout_screen.dart';
 import 'details_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  // const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class HomeScreen extends StatelessWidget {
               : const SizedBox()
         ],
         backgroundColor: green,
-        title: const Text("Home"),
+        title: Text(AppLocalizations.of(context)!.home),
         centerTitle: true,
       ),
       body: Padding(
@@ -73,6 +74,7 @@ class HomeScreen extends StatelessWidget {
                       },
                       child: GridTile(
                         footer: GridTileBar(
+                          backgroundColor: Colors.black45,
                           trailing: Consumer<CartProvider>(
                               builder: ((context, cart, child) {
                             return SharedPreferencesController().getUserType ==
@@ -82,14 +84,19 @@ class HomeScreen extends StatelessWidget {
                                     onPressed: () {
                                       cart.addProduct(products[index]);
                                     },
-                                    icon: const Icon(
+                                    icon: Icon(
                                       Icons.add,
-                                      size: 30,
+                                      size: 30.r,
+                                      color: Colors.white,
                                     ),
                                   )
                                 : const SizedBox();
                           })),
-                          leading: const Text("\$12.99"),
+                          leading: Text(
+                            "\$ ${products[index].price}",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 16.sp),
+                          ),
                           title: const Text(
                             "",
                           ),
@@ -102,9 +109,13 @@ class HomeScreen extends StatelessWidget {
                               right: 0,
                               left: 0,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: Image.asset(
+                                borderRadius: BorderRadius.circular(16.r),
+                                child: Image.network(
                                   products[index].imagePath,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset('assets/images/11.jpg');
+                                  },
                                 ),
                               ),
                             ),
@@ -127,7 +138,7 @@ class HomeScreen extends StatelessWidget {
                                                                     index])));
                                               },
                                               child: CircleAvatar(
-                                                radius: 15.r,
+                                                radius: 15.w,
                                                 backgroundColor: Colors.green,
                                                 child: const Icon(Icons.edit),
                                               ),
@@ -140,7 +151,7 @@ class HomeScreen extends StatelessWidget {
                                                         products[index].id!);
                                               },
                                               child: CircleAvatar(
-                                                radius: 15.r,
+                                                radius: 15.w,
                                                 backgroundColor: Colors.red,
                                                 child: const Icon(Icons.delete),
                                               ),
@@ -179,12 +190,12 @@ class HomeScreen extends StatelessWidget {
                   accountEmail: Text(SharedPreferencesController().getEmail),
                   currentAccountPictureSize: const Size.square(99),
                   currentAccountPicture: CircleAvatar(
-                    radius: 55.r,
+                    radius: 55.w,
                     backgroundImage: const AssetImage('assets/images/2.jpg'),
                   ),
                 ),
                 ListTile(
-                    title: const Text("Home"),
+                    title: Text(AppLocalizations.of(context)!.home),
                     leading: const Icon(Icons.home),
                     onTap: () {
                       Navigator.pop(context);
@@ -227,6 +238,13 @@ class HomeScreen extends StatelessWidget {
                       );
                     }),
                 ListTile(
+                    title: const Text("Language"),
+                    leading: const Icon(Icons.language),
+                    onTap: () async {
+                      await Provider.of<LangProviders>(context, listen: false)
+                          .changeLanguage();
+                    }),
+                ListTile(
                     title: const Text("Logout"),
                     leading: const Icon(Icons.exit_to_app),
                     onTap: () async {
@@ -239,10 +257,10 @@ class HomeScreen extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.only(bottom: 12),
-              child: const Text(
+              child: Text(
                 "Roses symbol to apologize and regret.",
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   color: green,
                 ),
               ),

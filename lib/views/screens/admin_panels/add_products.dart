@@ -9,7 +9,7 @@ import 'package:flower/views/widgets/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:path/path.dart' show basename;
 import '../../../constant/colors.dart';
 
 class AddProducts extends StatefulWidget {
@@ -77,13 +77,16 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
                     Container(
                       width: 180.w,
                       height: 180.h,
+                      clipBehavior: Clip.antiAlias,
                       decoration: BoxDecoration(
                           color: Colors.grey.shade300,
                           borderRadius: BorderRadius.circular(8.r)),
-                      child: Center(
-                          child: (imgPath == null)
-                              ? const Text("No img selected")
-                              : Image.file(imgPath!)),
+                      child: (imgPath == null)
+                          ? const Center(child: Text("No img selected"))
+                          : Image.file(
+                              imgPath!,
+                              fit: BoxFit.cover,
+                            ),
                     ),
                     PositionedDirectional(
                       bottom: 0,
@@ -134,7 +137,7 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
                     title: widget.product == null
                         ? 'Add Product'
                         : 'Update Product',
-                    backgroundColor: Colors.white,
+                    backgroundColor: Color(0xFFFFA4D3),
                     isLoading: loading,
                     onPressed: () async {
                       await addProduct();
@@ -148,9 +151,8 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
   }
 
   bool loading = false;
+
   ///////////////////////////////////////////////////////////////
-  File? imgPath;
-  String? imgName;
 
   choose2UploadImage() {
     showModalBottomSheet(
@@ -219,12 +221,17 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
         });
   }
 
+  File? imgPath;
+  String? imgName;
+  String? urlImg;
+
   uploadImage(ImageSource source) async {
     final pickedImg = await ImagePicker().pickImage(source: source);
     try {
       if (pickedImg != null) {
         setState(() {
           imgPath = File(pickedImg.path);
+          imgName = basename(pickedImg.path);
         });
       } else {
         showSnackBar(context, message: "NO img selected", error: true);
@@ -234,17 +241,21 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
     }
   }
 
-/////////////////////////////////////////////////////////////////
   Future<void> addProduct() async {
     setState(() {
       loading = true;
     });
     try {
+      final storageRef = FirebaseStorage.instance.ref(imgName);
+      await storageRef.putFile(imgPath!);
+      urlImg = await storageRef.getDownloadURL();
+
       if (widget.product == null) {
         await ProductFbController().createProduct(getProduct);
       } else {
         await ProductFbController().updateProduct(getProduct);
       }
+
       showSnackBar(
         context,
         message: widget.product == null ? "Product Added" : "Product Updated",
@@ -272,7 +283,7 @@ class _AddProductsState extends State<AddProducts> with SnackBarHelper {
     productModel.location = locationEditingController.text;
     productModel.description = descriptionEditingController.text;
     productModel.sellerId = SharedPreferencesController().getUId;
-    productModel.imagePath = 'assets/images/8.jpg';
+    productModel.imagePath = urlImg ?? '';
     return productModel;
   }
 }

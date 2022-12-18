@@ -1,7 +1,6 @@
 import 'package:flower/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../constant/colors.dart';
 import '../widgets/custom_appbar.dart';
 
@@ -31,11 +30,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
         child: Column(
           children: [
             Image.asset(widget.product.imagePath),
-            const SizedBox(height: 12,),
+             SizedBox(height: 12.h,),
              Text(
                 '\$ ${widget.product.price}',
-              style: const TextStyle(
-                fontSize: 20,
+              style:  TextStyle(
+                fontSize: 20.sp,
               ),
             ),
              SizedBox(height: 16.h,),
@@ -50,56 +49,61 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       color: const Color(0xFFFF8181),
                       borderRadius: BorderRadius.circular(4.r),
                     ),
-                    child: const Text(
+                    child:  Text(
                         'New',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 16.sp,
                       ),
                     ),
                   ),
                    SizedBox(width: 8.w,),
                   Row(
-                    children: const [
+                    children:  [
                        Icon(
                           Icons.star,
-                        size: 26,
+                        size: 26.r,
                         color: Color(0xFFFFBF00),
                       ),
                        Icon(
                           Icons.star,
-                        size: 26,
+                        size: 26.r,
                         color: Color(0xFFFFBF00),
                       ),
                        Icon(
                           Icons.star,
-                        size: 26,
-                        color: Color(0xFFFFBF00),
+                        size: 26.r,
+                        color: const Color(0xFFFFBF00),
                       ),
                        Icon(
                           Icons.star,
-                        size: 26,
-                        color: Color(0xFFFFBF00),
+                        size: 26.r,
+                        color: const Color(0xFFFFBF00),
                       ),
                        Icon(
                           Icons.star,
-                        size: 26,
-                        color: Color(0xFFFFBF00),
+                        size: 26.r,
+                        color: const Color(0xFFFFBF00),
                       ),
                     ],
                   ),
                   const Spacer(),
                   Row(
                     children:  [
-                      const Icon(
-                          Icons.edit_location,
-                        size: 20,
-                        color: Colors.black45,
+                       InkWell(
+                         onTap: (){
+                           ///
+                         },
+                         child: Icon(
+                            Icons.edit_location,
+                          size: 20.r,
+                          color: Colors.black45,
                       ),
+                       ),
                        SizedBox(width: 3.w,),
                       Text(
                           widget.product.location,
-                        style: const TextStyle(
-                          fontSize: 18,
+                        style:  TextStyle(
+                          fontSize: 18.sp,
                         ),
                       ),
                     ],
@@ -107,23 +111,23 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ],
               ),
             ),
-             const Padding(
-              padding:  EdgeInsets.all(10.0),
+              Padding(
+              padding:  const EdgeInsets.all(10.0),
               child: SizedBox(
                 width: double.infinity,
                 child: Text(
                   'Details',
                   textAlign: TextAlign.start,
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 24.sp,
                   ),
                 ),
               ),
             ),
              Text(
-              'A flower, sometimes known as a bloom or blossom, is the reproductive structure found in flowering plants (plants of the division Angiospermae). The biological function of a flower is to facilitate reproduction, usually by providing a mechanism for the union of sperm with eggs. Flowers may facilitate outcrossing (fusion of sperm and eggs from different individuals in a population) resulting from cross-pollination or allow selfing (fusion of sperm and egg from the same flower) when self-pollination occurs.',
-              style: const TextStyle(
-                fontSize: 16,
+              widget.product.description,
+              style:  TextStyle(
+                fontSize: 16.sp,
               ),
               maxLines: isShowMore ? 3 : null,
               overflow: TextOverflow.fade,
@@ -136,8 +140,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 },
                 child:  Text(
                   isShowMore ? 'Show more' : 'Show less',
-                  style: const TextStyle(
-                  fontSize: 16,
+                  style:  TextStyle(
+                  fontSize: 16.sp,
                 ),),
             ),
           ],

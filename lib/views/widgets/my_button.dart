@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyButton extends StatelessWidget {
   final String title;
@@ -22,14 +23,14 @@ class MyButton extends StatelessWidget {
         ),
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8.r),
           ),
         ),
       ),
       child:  isLoading ? const CircularProgressIndicator(color: Colors.white,) : Text(
       title,
-        style: const TextStyle(
-          fontSize: 20,
+        style:  TextStyle(
+          fontSize: 20.sp,
           color: Colors.white
         ),
       ),

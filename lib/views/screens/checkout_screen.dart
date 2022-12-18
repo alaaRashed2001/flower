@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../constant/colors.dart';
-import '../widgets/custom_appbar.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({Key? key}) : super(key: key);
@@ -14,7 +13,7 @@ class CheckoutScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: const [
-          ProductsAndPrice(),
+       //   ProductsAndPrice(),
         ],
         backgroundColor: green,
         title: const Text("Checkout"),
@@ -51,9 +50,9 @@ class CheckoutScreen extends StatelessWidget {
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(const Color(0xFFFFA4D3)),
               padding: MaterialStateProperty.all(const EdgeInsets.all(12)),
-              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r))),
             ),
-            child:  Text("Pay \$${cart.price}", style: const TextStyle(fontSize: 19),),
+            child:  Text("Pay \$${cart.price}", style:  TextStyle(fontSize: 19.sp),),
           ),
         ],
       ),

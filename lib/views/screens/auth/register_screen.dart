@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flower/firebase/user_fb_controller.dart';
 import 'package:flower/model/user_model.dart';
@@ -42,6 +44,8 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
 
   UserTypes userType = UserTypes.buyer;
 
+  File? imgPath;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +75,46 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(height: 60.h),
+
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.grey,
+                        ),
+                        child: Stack(
+                          children: [
+                            imgPath == null
+                                ?  CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    radius: 71.w,
+                                    backgroundImage:
+                                        const AssetImage("assets/images/avatar.png"),
+                                  )
+                                : ClipOval(
+                                    child: Image.file(
+                                      imgPath!,
+                                      width: 145.w,
+                                      height: 145.h,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                            Positioned(
+                              right: 95,
+                              bottom: -10,
+                              child: IconButton(
+                                onPressed: () {
+                                  ///
+                                },
+                                icon:  Icon(Icons.add_a_photo , size: 30.r,),
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 50.h),
+
 
                       /// Username
                       MyTextField(
