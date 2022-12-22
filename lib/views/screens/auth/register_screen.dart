@@ -11,6 +11,7 @@ import '../../../helper/snackbar.dart';
 import '../../widgets/my_button.dart';
 import '../../widgets/my_text_field.dart';
 import 'login_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -76,43 +77,43 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
 
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.grey,
-                        ),
-                        child: Stack(
-                          children: [
-                            imgPath == null
-                                ?  CircleAvatar(
-                                    backgroundColor: Colors.white,
-                                    radius: 71.w,
-                                    backgroundImage:
-                                        const AssetImage("assets/images/avatar.png"),
-                                  )
-                                : ClipOval(
-                                    child: Image.file(
-                                      imgPath!,
-                                      width: 145.w,
-                                      height: 145.h,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                            Positioned(
-                              right: 95,
-                              bottom: -10,
-                              child: IconButton(
-                                onPressed: () {
-                                  ///
-                                },
-                                icon:  Icon(Icons.add_a_photo , size: 30.r,),
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Container(
+                      //   padding: const EdgeInsets.all(5),
+                      //   decoration: const BoxDecoration(
+                      //     shape: BoxShape.circle,
+                      //     color: Colors.grey,
+                      //   ),
+                      //   child: Stack(
+                      //     children: [
+                      //       imgPath == null
+                      //           ?  CircleAvatar(
+                      //               backgroundColor: Colors.white,
+                      //               radius: 71.w,
+                      //               backgroundImage:
+                      //                   const AssetImage("assets/images/avatar.png"),
+                      //             )
+                      //           : ClipOval(
+                      //               child: Image.file(
+                      //                 imgPath!,
+                      //                 width: 145.w,
+                      //                 height: 145.h,
+                      //                 fit: BoxFit.cover,
+                      //               ),
+                      //             ),
+                      //       Positioned(
+                      //         right: 95,
+                      //         bottom: -10,
+                      //         child: IconButton(
+                      //           onPressed: () {
+                      //             ///
+                      //           },
+                      //           icon:  Icon(Icons.add_a_photo , size: 30.r,),
+                      //           color: Colors.grey,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       SizedBox(height: 50.h),
 
 
@@ -120,7 +121,7 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
                       MyTextField(
                         controller: usernameEditingController,
                         textInputType: TextInputType.text,
-                        hintText: 'Enter Your Username',
+                        hintText: AppLocalizations.of(context)!.username,
                       ),
                       SizedBox(height: 24.h),
 
@@ -128,7 +129,7 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
                       MyTextField(
                         controller: emailEditingController,
                         textInputType: TextInputType.emailAddress,
-                        hintText: 'Enter Your Email',
+                        hintText:AppLocalizations.of(context)!.email ,
                       ),
                       SizedBox(height: 24.h),
 
@@ -137,7 +138,7 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
                         obscure: true,
                         controller: passwordEditingController,
                         textInputType: TextInputType.text,
-                        hintText: 'Enter Your Password',
+                        hintText: AppLocalizations.of(context)!.password,
                       ),
                       SizedBox(height: 20.h),
 
@@ -155,7 +156,7 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
                                   });
                                 },
                               ),
-                              const Text('Buyer'),
+                               Text(AppLocalizations.of(context)!.buyer),
                             ],
                           ),
                           SizedBox(width: 40.w),
@@ -170,7 +171,7 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
                                   });
                                 },
                               ),
-                              const Text('Seller'),
+                               Text(AppLocalizations.of(context)!.seller),
                             ],
                           ),
                         ],
@@ -181,7 +182,7 @@ class _RegisterScreenState extends State<RegisterScreen> with SnackBarHelper {
                         onPressed: () async {
                           await performRegister();
                         },
-                        title: 'Register',
+                        title: AppLocalizations.of(context)!.register,
                         backgroundColor: green,
                       ),
                       SizedBox(

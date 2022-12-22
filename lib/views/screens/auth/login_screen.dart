@@ -9,6 +9,7 @@ import '../../../constant/colors.dart';
 import '../../../helper/snackbar.dart';
 import '../../widgets/my_button.dart';
 import '../../widgets/my_text_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -68,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
                       MyTextField(
                         controller: emailEditingController,
                         textInputType: TextInputType.emailAddress,
-                        hintText: 'Enter Your Email',
+                        hintText: AppLocalizations.of(context)!.email,
                       ),
                        SizedBox(
                         height: 24.h,
@@ -77,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
                         obscure: true,
                         controller: passwordEditingController,
                         textInputType: TextInputType.text,
-                        hintText: 'Enter Your Password',
+                        hintText: AppLocalizations.of(context)!.password,
                       ),
                        SizedBox(
                         height: 40.h,
@@ -87,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
                         onPressed: () async {
                           await performLogin();
                         },
-                        title: 'Log In',
+                        title: AppLocalizations.of(context)!.login,
                         backgroundColor: green,
                       ),
                        SizedBox(
@@ -102,10 +103,10 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
                             );
                           },
                           child: Text(
-                            'Forgot password',
+                            AppLocalizations.of(context)!.forgotpassword,
                             style: TextStyle(
                               color: Colors.green,
-                              fontSize: 20,
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.bold,
                               decoration: TextDecoration.underline,
                             ),
@@ -115,15 +116,19 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
                         height: 20.h,
                       ),
                       Row(
+
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            'Don\'t have an account ? -',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                            ),
+                           Expanded(
+                             child: Text(
+                              AppLocalizations.of(context)!.noAccount,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold
+                              ),
                           ),
+                           ),
                           TextButton(
                             onPressed: (){
                               Navigator.of(context).push(
@@ -133,10 +138,10 @@ class _LoginScreenState extends State<LoginScreen> with SnackBarHelper {
                               );
                             },
                             child: Text(
-                              '-Register',
+                              AppLocalizations.of(context)!.register,
                               style: TextStyle(
                                 color: Colors.green,
-                                fontSize: 20,
+                                fontSize: 20.sp,
                                 fontWeight: FontWeight.bold,
                                 decoration: TextDecoration.underline,
                               ),

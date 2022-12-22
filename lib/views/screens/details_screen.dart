@@ -1,4 +1,5 @@
 import 'package:flower/model/product_model.dart';
+import 'package:flower/views/screens/map_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../constant/colors.dart';
@@ -91,7 +92,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     children:  [
                        InkWell(
                          onTap: (){
-                           ///
+                           Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const MapScreen()));
                          },
                          child: Icon(
                             Icons.edit_location,

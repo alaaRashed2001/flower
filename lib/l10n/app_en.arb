@@ -1,3 +1,12 @@
 {
-  "home": "Home"
+  "home": "Home",
+  "username" : "Enter Your Username",
+  "email" : "Enter Your Email",
+  "password" : "Enter Your Password",
+  "buyer" : "Buyer",
+  "seller" : "Seller",
+  "register" : "Register",
+  "login" : "Log In",
+  "forgotpassword" : "Forgot Password",
+  "noAccount" : "Don\\'t have an account ? -"
 }
