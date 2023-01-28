@@ -1,16 +1,8 @@
-# flower
+An online store for selling flowers based on the framework of the Flutter and programming language  Dart, and the services of Firebase.
+It is used by two types of users, a seller and a buyer, 
+so that the seller displays his products of flowers,
+and the buyer adds them to the basket and purchases them.
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![photo_2023-01-28_16-21-51](https://user-images.githubusercontent.com/114382094/215271870-c8b4f3a9-144c-43a5-abda-00f352c1d568.jpg)
+![photo_2023-01-28_16-24-36](https://user-images.githubusercontent.com/114382094/215271873-975c4328-b1ed-40df-bfba-2192ec00ba94.jpg)
+![photo_2023-01-28_16-24-48](https://user-images.githubusercontent.com/114382094/215271880-1486e27a-fa1d-42f7-bf16-493cfb7310bc.jpg)
